@@ -50,7 +50,7 @@ export default function MultipleChoiceChart({ stats, questionText }: MultipleCho
                 fill="#8884d8"
                 dataKey="count"
               >
-                {stats.map((entry, index) => (
+                {stats.map((_, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
