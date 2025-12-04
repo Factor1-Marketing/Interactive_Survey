@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { Questionnaire, Question, Answer } from '../lib/types.js';
+import { Questionnaire, Question, Answer } from './types.js';
 
 const supabaseUrl = process.env.SUPABASE_URL || '';
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || '';
