@@ -69,16 +69,22 @@ export default function QuestionnaireForm() {
 
     try {
       // Submit all answers
-      const submitPromises = Object.entries(answers)
-        .filter(([_, value]) => value.trim())
-        .map(([questionId, answerText]) =>
-          answerApi.submit({ questionId, answerText })
-        );
+      const answersToSubmit = Object.entries(answers)
+        .filter(([_, value]) => value.trim());
+      
+      console.log('Submitting answers:', answersToSubmit.length, 'answers');
+      
+      const submitPromises = answersToSubmit.map(([questionId, answerText]) => {
+        console.log('Submitting answer for question:', questionId, 'answer:', answerText);
+        return answerApi.submit({ questionId, answerText });
+      });
 
-      await Promise.all(submitPromises);
+      const results = await Promise.all(submitPromises);
+      console.log('All answers submitted successfully:', results);
       setSubmitted(true);
     } catch (error) {
       console.error('Error submitting answers:', error);
+      console.error('Error details:', error instanceof Error ? error.message : error);
       alert('Failed to submit answers. Please try again.');
     } finally {
       setSubmitting(false);

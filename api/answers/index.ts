@@ -42,6 +42,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       };
 
       await DatabaseService.createAnswer(answer);
+      console.log('Answer created successfully:', answer.id, 'for question:', questionId);
+      console.log('Answer text:', answerText);
       
       // Supabase Realtime will automatically broadcast the update
       return res.status(201).json(answer);
