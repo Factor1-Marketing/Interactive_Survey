@@ -56,27 +56,34 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {results.length === 0 ? (
+      {!Array.isArray(results) || results.length === 0 ? (
         <div className="empty-state">
           <p>No answers submitted yet. Share the participant link to start collecting responses.</p>
         </div>
       ) : (
         <div className="results-container">
-          {results.map((result) => (
-            <div key={result.question.id}>
-              {result.question.type === 'multiple_choice' ? (
-                <MultipleChoiceChart
-                  stats={result.stats || []}
-                  questionText={result.question.questionText}
-                />
-              ) : (
-                <WordCloud
-                  data={result.wordCloudData || []}
-                  questionText={result.question.questionText}
-                />
-              )}
-            </div>
-          ))}
+          {results.map((result) => {
+            // Ensure result has required properties
+            if (!result || !result.question) {
+              console.warn('Invalid result data:', result);
+              return null;
+            }
+            return (
+              <div key={result.question.id}>
+                {result.question.type === 'multiple_choice' ? (
+                  <MultipleChoiceChart
+                    stats={result.stats || []}
+                    questionText={result.question.questionText}
+                  />
+                ) : (
+                  <WordCloud
+                    data={result.wordCloudData || []}
+                    questionText={result.question.questionText}
+                  />
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

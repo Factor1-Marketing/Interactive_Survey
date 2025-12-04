@@ -22,31 +22,51 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       const questions = await DatabaseService.getQuestionsByQuestionnaire(questionnaireId);
       
+      // Ensure questions is an array
+      if (!Array.isArray(questions) || questions.length === 0) {
+        console.log(`No questions found for questionnaire ${questionnaireId}`);
+        return res.json([]);
+      }
+      
       const results = await Promise.all(
         questions.map(async (question) => {
-          const answers = await DatabaseService.getAnswersByQuestion(question.id);
-          
-          if (question.type === 'multiple_choice') {
-            const statsMap = new Map<string, number>();
-            const totalAnswers = answers.length;
+          try {
+            const answers = await DatabaseService.getAnswersByQuestion(question.id);
+            
+            // Ensure answers is an array
+            const answersArray = Array.isArray(answers) ? answers : [];
+            
+            if (question.type === 'multiple_choice') {
+              const statsMap = new Map<string, number>();
+              const totalAnswers = answersArray.length;
 
-            answers.forEach(answer => {
-              const count = statsMap.get(answer.answerText) || 0;
-              statsMap.set(answer.answerText, count + 1);
-            });
+              answersArray.forEach(answer => {
+                const count = statsMap.get(answer.answerText) || 0;
+                statsMap.set(answer.answerText, count + 1);
+              });
 
-            const stats: MultipleChoiceStats[] = Array.from(statsMap.entries())
-              .map(([option, count]) => ({
-                option,
-                count,
-                percentage: totalAnswers > 0 ? Math.round((count / totalAnswers) * 100) : 0
-              }))
-              .sort((a, b) => b.count - a.count);
+              const stats: MultipleChoiceStats[] = Array.from(statsMap.entries())
+                .map(([option, count]) => ({
+                  option,
+                  count,
+                  percentage: totalAnswers > 0 ? Math.round((count / totalAnswers) * 100) : 0
+                }))
+                .sort((a, b) => b.count - a.count);
 
-            return { question, answers, stats };
-          } else {
-            const wordCloudData = groupSimilarAnswers(answers);
-            return { question, answers, wordCloudData };
+              return { question, answers: answersArray, stats };
+            } else {
+              const wordCloudData = groupSimilarAnswers(answersArray);
+              return { question, answers: answersArray, wordCloudData };
+            }
+          } catch (error) {
+            console.error(`Error processing question ${question.id}:`, error);
+            // Return a result with empty data for this question
+            return {
+              question,
+              answers: [],
+              stats: question.type === 'multiple_choice' ? [] : undefined,
+              wordCloudData: question.type === 'open_ended' ? [] : undefined
+            };
           }
         })
       );

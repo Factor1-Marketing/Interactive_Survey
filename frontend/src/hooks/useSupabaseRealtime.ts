@@ -13,10 +13,14 @@ export function useSupabaseRealtime(questionnaireId: string | null) {
     const loadResults = async () => {
       try {
         const data = await answerApi.getByQuestionnaire(questionnaireId);
-        setResults(data);
+        // Ensure data is always an array
+        const resultsArray = Array.isArray(data) ? data : [];
+        console.log('Loaded results:', resultsArray);
+        setResults(resultsArray);
         setIsConnected(true);
       } catch (error) {
         console.error('Error loading results:', error);
+        setResults([]); // Set empty array on error
       }
     };
 
@@ -58,8 +62,14 @@ export function useSupabaseRealtime(questionnaireId: string | null) {
           },
           async () => {
             // Reload results when a new answer is inserted
-            const data = await answerApi.getByQuestionnaire(questionnaireId);
-            setResults(data);
+            try {
+              const data = await answerApi.getByQuestionnaire(questionnaireId);
+              // Ensure data is always an array
+              const resultsArray = Array.isArray(data) ? data : [];
+              setResults(resultsArray);
+            } catch (error) {
+              console.error('Error reloading results:', error);
+            }
           }
         )
         .subscribe((status) => {

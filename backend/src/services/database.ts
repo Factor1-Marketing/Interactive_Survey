@@ -51,7 +51,15 @@ export class DatabaseService {
       .select('*')
       .order('created_at', { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error fetching questionnaires:', error);
+      throw error;
+    }
+
+    if (!data || !Array.isArray(data)) {
+      console.warn('No questionnaires found or invalid data');
+      return [];
+    }
 
     return data.map((row: SupabaseQuestionnaire) => ({
       id: row.id,
@@ -82,7 +90,18 @@ export class DatabaseService {
       .eq('questionnaire_id', questionnaireId)
       .order('id');
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error fetching questions:', error);
+      throw error;
+    }
+
+    // Ensure data is always an array
+    if (!data || !Array.isArray(data)) {
+      console.warn(`No questions found or invalid data for questionnaire ${questionnaireId}. Data:`, data);
+      return [];
+    }
+
+    console.log(`Fetched ${data.length} questions for questionnaire ${questionnaireId}`);
 
     return data.map((row: SupabaseQuestion) => ({
       id: row.id,
@@ -135,7 +154,15 @@ export class DatabaseService {
       .eq('question_id', questionId)
       .order('submitted_at', { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error fetching answers:', error);
+      throw error;
+    }
+
+    if (!data || !Array.isArray(data)) {
+      console.warn(`No answers found or invalid data for question ${questionId}`);
+      return [];
+    }
 
     return data.map((row: SupabaseAnswer) => ({
       id: row.id,
@@ -158,7 +185,15 @@ export class DatabaseService {
       .in('question_id', questionIds)
       .order('submitted_at', { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error fetching all answers:', error);
+      throw error;
+    }
+
+    if (!data || !Array.isArray(data)) {
+      console.warn(`No answers found or invalid data for questionnaire ${questionnaireId}`);
+      return [];
+    }
 
     return data.map((row: SupabaseAnswer) => ({
       id: row.id,
