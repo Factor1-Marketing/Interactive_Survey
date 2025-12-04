@@ -3,11 +3,14 @@
   "buildCommand": "npm install --prefix frontend && npm run build --prefix frontend",
   "outputDirectory": "frontend/dist",
   "framework": null,
-  "cleanUrls": true,
-  "trailingSlash": false,
+  "functions": {
+    "api/**/*.ts": {
+      "runtime": "@vercel/node"
+    }
+  },
   "rewrites": [
     {
-      "source": "/((?!api|_next|assets).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
