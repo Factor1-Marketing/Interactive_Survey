@@ -1,9 +1,9 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import type { MultipleChoiceStats } from '../../../../backend/src/types.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Dynamic import for ES modules
+  // Dynamic import for ES modules (runtime values only)
   const { DatabaseService } = await import('../../../../backend/src/services/database.js');
-  const { MultipleChoiceStats } = await import('../../../../backend/src/types.js');
   const { groupSimilarAnswers } = await import('../../../../backend/src/services/similarity.js');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
