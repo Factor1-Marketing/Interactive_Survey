@@ -1,10 +1,10 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { v4 as uuidv4 } from 'uuid';
-import type { SubmitAnswerRequest, Answer } from '../../backend/src/types.js';
+import type { SubmitAnswerRequest, Answer } from '../lib/types.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Dynamic import for ES modules (runtime values only)
-  const { DatabaseService } = await import('../../backend/src/services/database.js');
+  const { DatabaseService } = await import('../lib/database.js');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
