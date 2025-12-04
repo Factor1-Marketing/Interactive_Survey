@@ -1,7 +1,8 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { DatabaseService } from '../../backend/src/services/database.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Dynamic import for ES modules
+  const { DatabaseService } = await import('../../backend/src/services/database.js');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');

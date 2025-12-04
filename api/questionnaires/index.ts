@@ -1,9 +1,10 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { v4 as uuidv4 } from 'uuid';
-import { DatabaseService } from '../../backend/src/services/database.js';
-import { CreateQuestionnaireRequest, Questionnaire, Question } from '../../backend/src/types.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Dynamic import for ES modules
+  const { DatabaseService } = await import('../../backend/src/services/database.js');
+  const { CreateQuestionnaireRequest, Questionnaire, Question } = await import('../../backend/src/types.js');
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
