@@ -52,6 +52,18 @@ const api = axios.create({
   },
 });
 
+// Add response interceptor for debugging
+api.interceptors.response.use(
+  (response) => {
+    console.log('API Response:', response.config.url, response.data);
+    return response;
+  },
+  (error) => {
+    console.error('API Error:', error.config?.url, error.response?.data || error.message);
+    return Promise.reject(error);
+  }
+);
+
 export const questionnaireApi = {
   create: async (data: CreateQuestionnaireRequest): Promise<Questionnaire> => {
     const response = await api.post('/questionnaires', data);

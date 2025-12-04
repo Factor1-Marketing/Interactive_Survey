@@ -20,22 +20,39 @@ export default function QuestionnaireForm() {
   const loadQuestionnaire = async () => {
     try {
       const data = await questionnaireApi.getById(questionnaireId!);
-      console.log('Loaded questionnaire data:', data);
-      console.log('Questions:', data.questions);
+      console.log('=== Questionnaire Load Debug ===');
+      console.log('Full response data:', JSON.stringify(data, null, 2));
+      console.log('Data type:', typeof data);
+      console.log('Has questions property:', 'questions' in data);
+      console.log('Questions value:', data.questions);
+      console.log('Questions type:', typeof data.questions);
+      console.log('Is array:', Array.isArray(data.questions));
+      console.log('Questions length:', data.questions?.length);
+      console.log('==============================');
+      
       setQuestionnaire(data);
       
       // Initialize answers object
       const initialAnswers: { [key: string]: string } = {};
-      if (data.questions && Array.isArray(data.questions)) {
-        data.questions.forEach((q: Question) => {
-          initialAnswers[q.id] = '';
+      const questions = data.questions;
+      
+      if (questions && Array.isArray(questions) && questions.length > 0) {
+        console.log('Processing', questions.length, 'questions');
+        questions.forEach((q: Question) => {
+          if (q && q.id) {
+            initialAnswers[q.id] = '';
+          } else {
+            console.warn('Invalid question object:', q);
+          }
         });
       } else {
-        console.warn('No questions found in questionnaire data');
+        console.warn('No valid questions found. Questions:', questions);
+        console.warn('Questionnaire ID:', questionnaireId);
       }
       setAnswers(initialAnswers);
     } catch (error) {
       console.error('Error loading questionnaire:', error);
+      console.error('Error details:', error instanceof Error ? error.message : error);
       alert('Failed to load questionnaire');
     } finally {
       setLoading(false);

@@ -24,15 +24,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(404).json({ error: 'Questionnaire not found' });
       }
 
-      const questions = await DatabaseService.getQuestionsByQuestionnaire(id);
-      console.log(`Fetched ${questions?.length || 0} questions for questionnaire ${id}`);
-      console.log('Questions data:', JSON.stringify(questions, null, 2));
+      let questions;
+      try {
+        questions = await DatabaseService.getQuestionsByQuestionnaire(id);
+        console.log(`Fetched ${questions?.length || 0} questions for questionnaire ${id}`);
+        console.log('Questions data type:', typeof questions);
+        console.log('Is array:', Array.isArray(questions));
+        if (questions && questions.length > 0) {
+          console.log('First question sample:', JSON.stringify(questions[0], null, 2));
+        }
+      } catch (dbError) {
+        console.error('Database error fetching questions:', dbError);
+        questions = [];
+      }
       
       // Ensure questions is always an array
       const questionsArray = Array.isArray(questions) ? questions : [];
       
-      const response = { ...questionnaire, questions: questionsArray };
-      console.log('Sending response with', questionsArray.length, 'questions');
+      const response = { 
+        ...questionnaire, 
+        questions: questionsArray 
+      };
+      
+      console.log('=== API Response Debug ===');
+      console.log('Questionnaire ID:', id);
+      console.log('Questionnaire title:', questionnaire.title);
+      console.log('Questions array length:', questionsArray.length);
+      console.log('Response structure:', JSON.stringify(response, null, 2));
+      console.log('==========================');
       
       return res.json(response);
     } catch (error) {
