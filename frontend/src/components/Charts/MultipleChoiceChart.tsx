@@ -7,7 +7,7 @@ interface MultipleChoiceChartProps {
   questionText: string;
 }
 
-const COLORS = ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6', '#1abc9c', '#34495e', '#e67e22'];
+const COLORS = ['#FF6B35', '#FF8C42', '#FFA07A', '#FFB84D', '#1a1a1a', '#333333', '#666666', '#999999'];
 
 export default function MultipleChoiceChart({ stats, questionText }: MultipleChoiceChartProps) {
   if (stats.length === 0) {

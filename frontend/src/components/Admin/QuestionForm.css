@@ -14,7 +14,7 @@
 }
 
 .question-form-header h3 {
-  color: #2c3e50;
+  color: #1a1a1a;
   margin: 0;
 }
 
@@ -40,7 +40,7 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
-  color: #2c3e50;
+  color: #1a1a1a;
 }
 
 .form-input {
@@ -49,6 +49,13 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #FF6B35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
 }
 
 .radio-group {
@@ -94,7 +101,7 @@
 }
 
 .btn-add-option {
-  background-color: #27ae60;
+  background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -102,9 +109,13 @@
   cursor: pointer;
   font-size: 0.9rem;
   margin-top: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s;
 }
 
 .btn-add-option:hover {
-  background-color: #229954;
+  background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(255, 107, 53, 0.3);
 }
 

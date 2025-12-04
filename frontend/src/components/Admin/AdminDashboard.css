@@ -12,44 +12,52 @@
 }
 
 .admin-header h1 {
-  color: #2c3e50;
+  color: #1a1a1a;
+  background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .btn {
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 1rem;
   cursor: pointer;
   text-decoration: none;
   display: inline-block;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
+  font-weight: 600;
 }
 
 .btn-primary {
-  background-color: #3498db;
+  background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
   color: white;
+  box-shadow: 0 2px 4px rgba(255, 107, 53, 0.3);
 }
 
 .btn-primary:hover {
-  background-color: #2980b9;
+  background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);
+  box-shadow: 0 4px 8px rgba(255, 107, 53, 0.4);
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
-  background-color: #95a5a6;
+  background-color: #666666;
   color: white;
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
 }
 
 .btn-secondary:hover {
-  background-color: #7f8c8d;
+  background-color: #333333;
 }
 
 .empty-state {
   text-align: center;
   padding: 4rem;
-  color: #7f8c8d;
+  color: #666666;
 }
 
 .questionnaire-list {
@@ -73,12 +81,12 @@
 }
 
 .questionnaire-header h2 {
-  color: #2c3e50;
+  color: #1a1a1a;
   margin: 0;
 }
 
 .date {
-  color: #7f8c8d;
+  color: #666666;
   font-size: 0.9rem;
 }
 
@@ -96,7 +104,7 @@
 
 .link-group label {
   font-weight: 600;
-  color: #2c3e50;
+  color: #1a1a1a;
   font-size: 0.9rem;
 }
 

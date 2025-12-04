@@ -8,8 +8,12 @@
 }
 
 .dashboard-header h1 {
-  color: #2c3e50;
+  color: #1a1a1a;
   margin: 0;
+  background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .connection-status {
@@ -20,7 +24,7 @@
   background-color: #f8f9fa;
   border-radius: 4px;
   font-size: 0.9rem;
-  color: #2c3e50;
+  color: #333333;
 }
 
 .status-indicator {
@@ -31,8 +35,8 @@
 }
 
 .status-indicator.connected {
-  background-color: #27ae60;
-  box-shadow: 0 0 4px #27ae60;
+  background-color: #FF6B35;
+  box-shadow: 0 0 4px #FF6B35;
 }
 
 .status-indicator.disconnected {
@@ -61,6 +65,6 @@
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  color: #7f8c8d;
+  color: #666666;
 }
 

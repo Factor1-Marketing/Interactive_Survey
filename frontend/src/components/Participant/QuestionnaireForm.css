@@ -8,9 +8,13 @@
 }
 
 .questionnaire-form-container h1 {
-  color: #2c3e50;
+  color: #1a1a1a;
   margin-bottom: 2rem;
   text-align: center;
+  background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .participant-form {
@@ -28,7 +32,7 @@
 .question-label {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #2c3e50;
+  color: #1a1a1a;
 }
 
 .required {
@@ -54,7 +58,8 @@
 }
 
 .radio-option:hover {
-  border-color: #3498db;
+  border-color: #FF6B35;
+  background-color: #fff5f2;
 }
 
 .radio-option input[type="radio"] {
@@ -65,7 +70,7 @@
 
 .radio-option input[type="radio"]:checked + span {
   font-weight: 600;
-  color: #3498db;
+  color: #FF6B35;
 }
 
 .text-input {
@@ -78,7 +83,8 @@
 
 .text-input:focus {
   outline: none;
-  border-color: #3498db;
+  border-color: #FF6B35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
 }
 
 .form-actions {
@@ -88,18 +94,22 @@
 }
 
 .btn-submit {
-  background-color: #27ae60;
+  background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
   color: white;
   border: none;
   padding: 1rem 2rem;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 1.1rem;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(255, 107, 53, 0.3);
 }
 
 .btn-submit:hover:not(:disabled) {
-  background-color: #229954;
+  background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);
+  box-shadow: 0 4px 8px rgba(255, 107, 53, 0.4);
+  transform: translateY(-1px);
 }
 
 .btn-submit:disabled {
@@ -127,12 +137,12 @@
 }
 
 .success-message h2 {
-  color: #27ae60;
+  color: #FF6B35;
   margin-bottom: 1rem;
 }
 
 .success-message p {
-  color: #7f8c8d;
+  color: #666666;
   font-size: 1.1rem;
 }
 

@@ -7,14 +7,14 @@
 }
 
 .chart-container h3 {
-  color: #2c3e50;
+  color: #1a1a1a;
   margin-bottom: 1.5rem;
   font-size: 1.2rem;
 }
 
 .no-data {
   text-align: center;
-  color: #7f8c8d;
+  color: #666666;
   padding: 2rem;
 }
 
@@ -31,7 +31,7 @@
 }
 
 .chart-item h4 {
-  color: #2c3e50;
+  color: #1a1a1a;
   margin-bottom: 1rem;
   font-size: 1rem;
 }
@@ -41,7 +41,7 @@
 }
 
 .stats-table h4 {
-  color: #2c3e50;
+  color: #1a1a1a;
   margin-bottom: 1rem;
 }
 
@@ -58,9 +58,9 @@
 }
 
 .stats-table th {
-  background-color: #f8f9fa;
+  background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
+  color: white;
   font-weight: 600;
-  color: #2c3e50;
 }
 
 .stats-table tr:hover {

@@ -6,7 +6,8 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/admin" className="navbar-brand">
-          Questionnaire App
+          <img src="/Factor1_Logo_201910.jpg" alt="Factor1" className="navbar-logo" />
+          <span>Questionnaire App</span>
         </Link>
         <div className="navbar-links">
           <Link to="/admin">Dashboard</Link>

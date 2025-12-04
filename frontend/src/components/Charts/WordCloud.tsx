@@ -48,9 +48,11 @@ export default function WordCloud({ data, questionText }: WordCloudProps) {
       const x = centerX + Math.cos(radian) * distanceFromCenter;
       const y = centerY + Math.sin(radian) * distanceFromCenter;
 
-      // Measure text
+      // Measure text - use Factor1 orange gradient
       ctx.font = `${fontSize}px Arial`;
-      ctx.fillStyle = `rgba(52, 152, 219, ${0.5 + normalizedValue * 0.5})`; // Opacity based on value
+      // Convert Factor1 orange (#FF6B35) to RGB and adjust opacity based on value
+      const opacity = 0.6 + normalizedValue * 0.4;
+      ctx.fillStyle = `rgba(255, 107, 53, ${opacity})`; // Factor1 orange with opacity based on value
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
 
