@@ -20,13 +20,19 @@ export default function QuestionnaireForm() {
   const loadQuestionnaire = async () => {
     try {
       const data = await questionnaireApi.getById(questionnaireId!);
+      console.log('Loaded questionnaire data:', data);
+      console.log('Questions:', data.questions);
       setQuestionnaire(data);
       
       // Initialize answers object
       const initialAnswers: { [key: string]: string } = {};
-      data.questions?.forEach((q: Question) => {
-        initialAnswers[q.id] = '';
-      });
+      if (data.questions && Array.isArray(data.questions)) {
+        data.questions.forEach((q: Question) => {
+          initialAnswers[q.id] = '';
+        });
+      } else {
+        console.warn('No questions found in questionnaire data');
+      }
       setAnswers(initialAnswers);
     } catch (error) {
       console.error('Error loading questionnaire:', error);
@@ -89,56 +95,74 @@ export default function QuestionnaireForm() {
     );
   }
 
+  const questions = questionnaire.questions || [];
+  const hasQuestions = Array.isArray(questions) && questions.length > 0;
+
   return (
     <div className="container">
       <div className="questionnaire-form-container">
         <h1>{questionnaire.title}</h1>
-        <form onSubmit={handleSubmit} className="participant-form">
-          {questionnaire.questions?.map((question: Question) => (
-            <div key={question.id} className="question-item">
-              <label className="question-label">
-                {question.questionText}
-                {question.type === 'multiple_choice' && <span className="required">*</span>}
-              </label>
-
-              {question.type === 'multiple_choice' ? (
-                <div className="options-group">
-                  {question.options?.map((option, index) => (
-                    <label key={index} className="radio-option">
-                      <input
-                        type="radio"
-                        name={question.id}
-                        value={option}
-                        checked={answers[question.id] === option}
-                        onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                        required
-                      />
-                      <span>{option}</span>
-                    </label>
-                  ))}
-                </div>
-              ) : (
-                <input
-                  type="text"
-                  value={answers[question.id] || ''}
-                  onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                  placeholder="Enter your answer"
-                  className="text-input"
-                />
-              )}
-            </div>
-          ))}
-
-          <div className="form-actions">
-            <button
-              type="submit"
-              disabled={submitting}
-              className="btn btn-submit"
-            >
-              {submitting ? 'Submitting...' : 'Submit Answers'}
-            </button>
+        {!hasQuestions ? (
+          <div className="error" style={{ padding: '2rem', textAlign: 'center' }}>
+            <p>No questions found in this questionnaire.</p>
+            <p style={{ fontSize: '0.9rem', color: '#7f8c8d', marginTop: '0.5rem' }}>
+              Please contact the administrator.
+            </p>
           </div>
-        </form>
+        ) : (
+          <form onSubmit={handleSubmit} className="participant-form">
+            {questions.map((question: Question) => (
+              <div key={question.id} className="question-item">
+                <label className="question-label">
+                  {question.questionText}
+                  {question.type === 'multiple_choice' && <span className="required">*</span>}
+                </label>
+
+                {question.type === 'multiple_choice' ? (
+                  <div className="options-group">
+                    {question.options && question.options.length > 0 ? (
+                      question.options.map((option, index) => (
+                        <label key={index} className="radio-option">
+                          <input
+                            type="radio"
+                            name={question.id}
+                            value={option}
+                            checked={answers[question.id] === option}
+                            onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                            required
+                          />
+                          <span>{option}</span>
+                        </label>
+                      ))
+                    ) : (
+                      <p style={{ color: '#e74c3c', fontSize: '0.9rem' }}>
+                        No options available for this question.
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <input
+                    type="text"
+                    value={answers[question.id] || ''}
+                    onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                    placeholder="Enter your answer"
+                    className="text-input"
+                  />
+                )}
+              </div>
+            ))}
+
+            <div className="form-actions">
+              <button
+                type="submit"
+                disabled={submitting}
+                className="btn btn-submit"
+              >
+                {submitting ? 'Submitting...' : 'Submit Answers'}
+              </button>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );

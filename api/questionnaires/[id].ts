@@ -25,7 +25,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       const questions = await DatabaseService.getQuestionsByQuestionnaire(id);
-      return res.json({ ...questionnaire, questions });
+      console.log(`Fetched ${questions?.length || 0} questions for questionnaire ${id}`);
+      
+      // Ensure questions is always an array
+      const questionsArray = Array.isArray(questions) ? questions : [];
+      
+      return res.json({ ...questionnaire, questions: questionsArray });
     } catch (error) {
       console.error('Error fetching questionnaire:', error);
       return res.status(500).json({ error: 'Failed to fetch questionnaire' });
